@@ -9,54 +9,47 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 仓库信息
- * @TableName diff_repot_info
+ * 
+ * @TableName diff_project_info
  */
-@TableName(value ="diff_repot_info")
+@TableName(value ="diff_project_info")
 @Data
-public class RepotInfo implements Serializable {
+public class ProjectInfo implements Serializable {
     /**
-     * 
+     * 自增id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
-     * 仓库名
+     * 仓库id
      */
-    @TableField(value = "depot_name")
-    private String depotName;
+    @TableField(value = "repot_id")
+    private Integer repotId;
 
     /**
-     * @see com.test.codediff.enums.CodeManageTypeEnum
-     * 仓库类型：0:SVN, 1:GIT
+     * 所属项目组名
      */
-    @TableField(value = "depot_type")
-    private Integer depotType;
+    @TableField(value = "project_group")
+    private String projectGroup;
 
     /**
-     * 仓库地址：例127.0.0.1:888
+     * 项目名
      */
-    @TableField(value = "depot_url")
-    private String depotUrl;
+    @TableField(value = "project_name")
+    private String projectName;
 
     /**
-     * 登录账号
+     * 项目仓库地址
      */
-    @TableField(value = "user_name")
-    private String userName;
-
-    /**
-     * 登录密码
-     */
-    @TableField(value = "passwd")
-    private String passwd;
+    @TableField(value = "project_url")
+    private String projectUrl;
 
     /**
      * 是否启用
      */
-    @TableField(value = "is_disable")
-    private Boolean isDisable;
+    @TableField(value = "is_diable")
+    private Boolean isDiable;
 
     /**
      * 是否删除
@@ -65,7 +58,7 @@ public class RepotInfo implements Serializable {
     private Boolean isDelete;
 
     /**
-     * 创建时间
+     * 添加时间
      */
     @TableField(value = "add_time")
     private Date addTime;
@@ -90,14 +83,13 @@ public class RepotInfo implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        RepotInfo other = (RepotInfo) that;
+        ProjectInfo other = (ProjectInfo) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getDepotName() == null ? other.getDepotName() == null : this.getDepotName().equals(other.getDepotName()))
-            && (this.getDepotType() == null ? other.getDepotType() == null : this.getDepotType().equals(other.getDepotType()))
-            && (this.getDepotUrl() == null ? other.getDepotUrl() == null : this.getDepotUrl().equals(other.getDepotUrl()))
-            && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
-            && (this.getPasswd() == null ? other.getPasswd() == null : this.getPasswd().equals(other.getPasswd()))
-            && (this.getIsDisable() == null ? other.getIsDisable() == null : this.getIsDisable().equals(other.getIsDisable()))
+            && (this.getRepotId() == null ? other.getRepotId() == null : this.getRepotId().equals(other.getRepotId()))
+            && (this.getProjectGroup() == null ? other.getProjectGroup() == null : this.getProjectGroup().equals(other.getProjectGroup()))
+            && (this.getProjectName() == null ? other.getProjectName() == null : this.getProjectName().equals(other.getProjectName()))
+            && (this.getProjectUrl() == null ? other.getProjectUrl() == null : this.getProjectUrl().equals(other.getProjectUrl()))
+            && (this.getIsDiable() == null ? other.getIsDiable() == null : this.getIsDiable().equals(other.getIsDiable()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
             && (this.getAddTime() == null ? other.getAddTime() == null : this.getAddTime().equals(other.getAddTime()))
             && (this.getLastTime() == null ? other.getLastTime() == null : this.getLastTime().equals(other.getLastTime()));
@@ -108,12 +100,11 @@ public class RepotInfo implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getDepotName() == null) ? 0 : getDepotName().hashCode());
-        result = prime * result + ((getDepotType() == null) ? 0 : getDepotType().hashCode());
-        result = prime * result + ((getDepotUrl() == null) ? 0 : getDepotUrl().hashCode());
-        result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
-        result = prime * result + ((getPasswd() == null) ? 0 : getPasswd().hashCode());
-        result = prime * result + ((getIsDisable() == null) ? 0 : getIsDisable().hashCode());
+        result = prime * result + ((getRepotId() == null) ? 0 : getRepotId().hashCode());
+        result = prime * result + ((getProjectGroup() == null) ? 0 : getProjectGroup().hashCode());
+        result = prime * result + ((getProjectName() == null) ? 0 : getProjectName().hashCode());
+        result = prime * result + ((getProjectUrl() == null) ? 0 : getProjectUrl().hashCode());
+        result = prime * result + ((getIsDiable() == null) ? 0 : getIsDiable().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getAddTime() == null) ? 0 : getAddTime().hashCode());
         result = prime * result + ((getLastTime() == null) ? 0 : getLastTime().hashCode());
@@ -127,12 +118,11 @@ public class RepotInfo implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", depotName=").append(depotName);
-        sb.append(", depotType=").append(depotType);
-        sb.append(", depotUrl=").append(depotUrl);
-        sb.append(", userName=").append(userName);
-        sb.append(", passwd=").append(passwd);
-        sb.append(", isDisable=").append(isDisable);
+        sb.append(", repotId=").append(repotId);
+        sb.append(", projectGroup=").append(projectGroup);
+        sb.append(", projectName=").append(projectName);
+        sb.append(", projectUrl=").append(projectUrl);
+        sb.append(", isDiable=").append(isDiable);
         sb.append(", isDelete=").append(isDelete);
         sb.append(", addTime=").append(addTime);
         sb.append(", lastTime=").append(lastTime);

@@ -4,6 +4,8 @@ import com.test.codediff.entity.RepotInfo;
 import com.test.codediff.exceptions.GitException;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -12,8 +14,8 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import java.io.File;
 
 @Slf4j
-@Data
-@Builder
+@Getter
+@Setter
 public class GitRepository extends Repository{
 
     public GitRepository(RepotInfo repotInfo){super(repotInfo);};
@@ -32,7 +34,7 @@ public class GitRepository extends Repository{
         } catch (GitAPIException e) {
             log.error("clone project:{} is failed", url);
             e.printStackTrace();
-            throw new GitException("clone is failed");
+            throw new GitException("克隆失败");
         }
         log.info("clone success: {}", url);
     }

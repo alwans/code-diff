@@ -1,11 +1,14 @@
 package com.test.codediff;
 
 
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.junit.Test;
 
 
@@ -15,10 +18,24 @@ import java.io.IOException;
 public class JgintTest {
 
     @Test
-    public void test1() throws IOException {
+    public void test1() throws IOException, GitAPIException {
+        String clone_uri  = "https://github.com/alwans/diff-demo.git";
+
+        String local_path = "G:\\jvm\\diff";
+
+        String local_git_file = local_path+ ".git";
+
+        String name = "alwanstest@163.com";
+        String passwd = "";
+
+//        Git.cloneRepository()
+//                .setURI(clone_uri)
+//                .setCredentialsProvider(new UsernamePasswordCredentialsProvider(name,passwd))
+//                .setBranch("master")
+//                .setDirectory(new File(local_path)).call();
         // 打开一个存在的仓库
         Repository existingRepo = new FileRepositoryBuilder()
-                .setGitDir(new File("git@202.101.187.185:13622/test_new/Tester.git"))
+                .setGitDir(new File(local_git_file))
                 .build();
 
         // 获取引用

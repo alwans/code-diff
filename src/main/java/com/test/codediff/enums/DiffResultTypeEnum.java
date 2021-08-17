@@ -1,16 +1,20 @@
 package com.test.codediff.enums;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+
 
 @Getter
 @AllArgsConstructor
-public enum DiffTypeEnum {
+public enum DiffResultTypeEnum {
 
-    BRANCH_DIFF(0, "分支diff"),
-    COMMIT_DIFF(1, "commitId diff");
+    DEL(0,"delete"),
+    ADD(1, "add"),
+    MODIFY(2, "modify");
 
-    private int code;
+    private Integer code;
     private String desc;
+
+
 }

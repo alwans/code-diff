@@ -8,10 +8,17 @@ import lombok.Getter;
 public enum CodeManageTypeEnum {
 
     SVN(0, "svn"),
-    GIT(1, "git");
+    GIT(1, "git"),
+    UNKNOWN(-1, "unknown");
 
     private Integer code;
     private String desc;
 
-
+    public static CodeManageTypeEnum getCmteByCode(Integer code){
+        for(CodeManageTypeEnum cmte: CodeManageTypeEnum.values()){
+            if(code==cmte.getCode())
+                return cmte;
+        }
+        return CodeManageTypeEnum.UNKNOWN;
+    }
 }
