@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
-public class ClassInfoDiff {
+public class ClassInfoDiff implements Serializable {
 
     private String className;
     private DiffTypeEnum diffType;
@@ -20,7 +21,7 @@ public class ClassInfoDiff {
 }
 
 @Data
-class MethodInfoDiff {
+class MethodInfoDiff implements Serializable {
 
     private String methodName;
     private DiffTypeEnum diffType;
