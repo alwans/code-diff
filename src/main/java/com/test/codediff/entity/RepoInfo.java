@@ -10,11 +10,11 @@ import lombok.Data;
 
 /**
  * 仓库信息
- * @TableName diff_repot_info
+ * @TableName diff_repo_info
  */
-@TableName(value ="diff_repot_info")
+@TableName(value ="diff_repo_info")
 @Data
-public class RepotInfo implements Serializable {
+public class RepoInfo implements Serializable {
     /**
      * 
      */
@@ -90,7 +90,7 @@ public class RepotInfo implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        RepotInfo other = (RepotInfo) that;
+        RepoInfo other = (RepoInfo) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getDepotName() == null ? other.getDepotName() == null : this.getDepotName().equals(other.getDepotName()))
             && (this.getDepotType() == null ? other.getDepotType() == null : this.getDepotType().equals(other.getDepotType()))

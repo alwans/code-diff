@@ -6,6 +6,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 /**
  *
  */
-public interface DiffProjectInfoService extends IService<ProjectInfo> {
+public interface ProjectInfoService extends IService<ProjectInfo> {
 
 }

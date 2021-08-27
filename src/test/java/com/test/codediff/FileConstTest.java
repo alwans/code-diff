@@ -7,6 +7,6 @@ public class FileConstTest {
 
     @Test
     public void test1(){
-        System.out.println(FileConst.ROOT_PATH);
+        System.out.println(FileConst.DIFF_ROOT_PATH);
     }
 }

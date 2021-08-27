@@ -10,6 +10,11 @@ public class FileTest {
 
     @Test
     public void test1() throws FileException {
-        new FileUtil().createDir(FileConst.ROOT_PATH);
+        new FileUtil().createDir(FileConst.DIFF_ROOT_PATH);
+    }
+
+    @Test
+    public void filePathTest(){
+        System.out.println(new FileUtil().addPath(FileConst.DIFF_ROOT_PATH, "server", "feature/v1.01"));
     }
 }

@@ -25,6 +25,8 @@
         <jgin.version>5.12.0.202106070339-r</jgin.version>
         <common.io.version>2.4</common.io.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <javaParser.version>3.18.0</javaParser.version>
+        <hutool.version>5.6.3</hutool.version>
     </properties>
 
 
@@ -98,7 +100,17 @@
             <artifactId>validation-api</artifactId>
             <version>${javax.validation.version}</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.github.javaparser/javaparser-core -->
+        <dependency>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-core</artifactId>
+            <version>${javaParser.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
 
     </dependencies>
 

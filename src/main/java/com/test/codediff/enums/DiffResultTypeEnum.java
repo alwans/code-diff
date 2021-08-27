@@ -4,10 +4,16 @@ package com.test.codediff.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.io.Serializable;
+
+
+/**
+ * @author wl
+ */
 
 @Getter
 @AllArgsConstructor
-public enum DiffResultTypeEnum {
+public enum DiffResultTypeEnum implements Serializable {
 
     DEL(0,"delete"),
     ADD(1, "add"),

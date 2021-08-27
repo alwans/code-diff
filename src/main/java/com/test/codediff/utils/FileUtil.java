@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author wl
+ */
 @Component
 @Slf4j
 public class FileUtil {
@@ -29,5 +32,20 @@ public class FileUtil {
             e.printStackTrace();
             throw new FileException("清空文件夹异常");
         }
+    }
+
+    /**
+     * 合并文件路径
+     * @param subPath
+     * @return
+     */
+    public String addPath(String... subPath){
+        StringBuilder sb = new StringBuilder();
+        for(String path: subPath){
+            path = path.replaceAll("/", "_");
+            sb.append(File.separator);
+            sb.append(path);
+        }
+        return sb.toString();
     }
 }

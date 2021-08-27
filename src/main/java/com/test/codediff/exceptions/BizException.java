@@ -7,17 +7,13 @@ import lombok.Data;
  * @author wl
  */
 @Data
-public class FileException extends RuntimeException{
+public class BizException extends RuntimeException{
 
     private StatusCode statusCode;
+    
+    public BizException(){}
 
-    public FileException(){}
-
-    public FileException(StatusCode statusCode){
+    public BizException(StatusCode statusCode){
         super(statusCode.getDesc());
-    }
-
-    public FileException(String msg){
-        super(msg);
     }
 }

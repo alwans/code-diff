@@ -18,7 +18,7 @@ public class DiffResultInfo implements Serializable {
     /**
      * 自增id
      */
-    @TableId(value = "id")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
