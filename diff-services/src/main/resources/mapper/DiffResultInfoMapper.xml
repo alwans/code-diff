@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.diff.services.mapper.DiffResultInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.test.diff.services.entity.DiffResultInfo">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+            <result property="diffType" column="diff_type" jdbcType="INTEGER"/>
+            <result property="commitBranch" column="commit_branch" jdbcType="VARCHAR"/>
+            <result property="oldBranch" column="old_branch" jdbcType="VARCHAR"/>
+            <result property="newBranch" column="new_branch" jdbcType="VARCHAR"/>
+            <result property="oldCommitId" column="old_commit_id" jdbcType="VARCHAR"/>
+            <result property="newCommitId" column="new_commit_id" jdbcType="VARCHAR"/>
+            <result property="diffResult" column="diff_result" jdbcType="VARCHAR"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_id,diff_type,
+        commit_branch,old_branch,new_branch,
+        old_commit_id,new_commit_id,diff_result,
+        add_time
+    </sql>
+</mapper>
