@@ -1,0 +1,30 @@
+package com.test.diff.services.internal;
+
+
+import com.test.diff.services.convert.ModelConvert;
+import com.test.diff.services.convert.ReptInfoVOConvert;
+import com.test.diff.services.entity.RepoInfo;
+import com.test.diff.services.enums.StatusCode;
+import com.test.diff.services.exceptions.GitException;
+import com.test.diff.services.vo.RepotInfoVO;
+
+/**
+ * @author wl
+ */
+public  class RepositoryFactory {
+
+    public static BaseRepository create(RepoInfo repoInfo) throws GitException {
+        ModelConvert<RepoInfo, RepotInfoVO> repoInfoVOModelConvert = new ReptInfoVOConvert();
+        RepotInfoVO repotInfoVO = repoInfoVOModelConvert.convert(repoInfo);
+        switch (repotInfoVO.getDepotType()){
+            case SVN:
+                new GitException(StatusCode.GIT_REPO_TYPE_NOT_EXISTS);
+            case GIT:
+                return new GitRepository(repoInfo);
+            default:
+                throw new GitException(StatusCode.GIT_REPO_TYPE_NOT_EXISTS);
+        }
+
+
+    }
+}
