@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.diff.services.mapper.CoverageAppMapper">
+
+    <resultMap id="BaseResultMap" type="com.test.diff.services.entity.CoverageApp">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+            <result property="appName" column="app_name" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="BOOLEAN"/>
+            <result property="host" column="host" jdbcType="VARCHAR"/>
+            <result property="port" column="port" jdbcType="VARCHAR"/>
+            <result property="isDisable" column="is_disable" jdbcType="BOOLEAN"/>
+            <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="lastTime" column="last_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_id,app_name,
+        status,host,port,
+        is_disable,is_delete,add_time,
+        last_time
+    </sql>
+</mapper>
