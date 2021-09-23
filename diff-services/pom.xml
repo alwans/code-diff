@@ -95,6 +95,15 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.cli</artifactId>
+            <version>0.8.8-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>G:/jvm/jacoco/org.jacoco.cli/target/org.jacoco.cli-0.8.8-SNAPSHOT-nodeps.jar</systemPath>
+<!--            <classifier>nodeps</classifier>-->
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -109,6 +118,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
             </plugin>
         </plugins>

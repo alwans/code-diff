@@ -24,8 +24,14 @@ public class ProjectInfo implements Serializable {
     /**
      * 仓库id
      */
-    @TableField(value = "repot_id")
-    private Integer repotId;
+    @TableField(value = "repo_id")
+    private Integer repoId;
+
+    /**
+     * 环境名
+     */
+    @TableField(value = "env")
+    private String env;
 
     /**
      * 所属项目组名
@@ -46,10 +52,22 @@ public class ProjectInfo implements Serializable {
     private String projectUrl;
 
     /**
+     * 收集状态：0：未收集，1：收集中，2：暂停收集
+     */
+    @TableField(value = "collect_status")
+    private Integer collectStatus;
+
+    /**
+     * 报告状态：0：未生成，1：生成中，2：生成成功，3：生成失败
+     */
+    @TableField(value = "report_status")
+    private Integer reportStatus;
+
+    /**
      * 是否启用
      */
-    @TableField(value = "is_diable")
-    private Boolean isDiable;
+    @TableField(value = "is_disable")
+    private Boolean isDisable;
 
     /**
      * 是否删除
@@ -85,11 +103,11 @@ public class ProjectInfo implements Serializable {
         }
         ProjectInfo other = (ProjectInfo) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getRepotId() == null ? other.getRepotId() == null : this.getRepotId().equals(other.getRepotId()))
+            && (this.getRepoId() == null ? other.getRepoId() == null : this.getRepoId().equals(other.getRepoId()))
             && (this.getProjectGroup() == null ? other.getProjectGroup() == null : this.getProjectGroup().equals(other.getProjectGroup()))
             && (this.getProjectName() == null ? other.getProjectName() == null : this.getProjectName().equals(other.getProjectName()))
             && (this.getProjectUrl() == null ? other.getProjectUrl() == null : this.getProjectUrl().equals(other.getProjectUrl()))
-            && (this.getIsDiable() == null ? other.getIsDiable() == null : this.getIsDiable().equals(other.getIsDiable()))
+            && (this.getIsDisable() == null ? other.getIsDisable() == null : this.getIsDisable().equals(other.getIsDisable()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
             && (this.getAddTime() == null ? other.getAddTime() == null : this.getAddTime().equals(other.getAddTime()))
             && (this.getLastTime() == null ? other.getLastTime() == null : this.getLastTime().equals(other.getLastTime()));
@@ -100,11 +118,11 @@ public class ProjectInfo implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getRepotId() == null) ? 0 : getRepotId().hashCode());
+        result = prime * result + ((getRepoId() == null) ? 0 : getRepoId().hashCode());
         result = prime * result + ((getProjectGroup() == null) ? 0 : getProjectGroup().hashCode());
         result = prime * result + ((getProjectName() == null) ? 0 : getProjectName().hashCode());
         result = prime * result + ((getProjectUrl() == null) ? 0 : getProjectUrl().hashCode());
-        result = prime * result + ((getIsDiable() == null) ? 0 : getIsDiable().hashCode());
+        result = prime * result + ((getIsDisable() == null) ? 0 : getIsDisable().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getAddTime() == null) ? 0 : getAddTime().hashCode());
         result = prime * result + ((getLastTime() == null) ? 0 : getLastTime().hashCode());
@@ -118,11 +136,11 @@ public class ProjectInfo implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", repotId=").append(repotId);
+        sb.append(", repoId=").append(repoId);
         sb.append(", projectGroup=").append(projectGroup);
         sb.append(", projectName=").append(projectName);
         sb.append(", projectUrl=").append(projectUrl);
-        sb.append(", isDiable=").append(isDiable);
+        sb.append(", isDisable=").append(isDisable);
         sb.append(", isDelete=").append(isDelete);
         sb.append(", addTime=").append(addTime);
         sb.append(", lastTime=").append(lastTime);

@@ -22,11 +22,14 @@ public class MethodInfo implements Serializable {
     private String methodName;
     private String md5;
     private DiffResultTypeEnum diffType;
-//    private String methodUri;
+    private String methodUri;
     private String params;
 
-    public String getUri(ClassInfo classInfo){
+    public String getMethodUri(ClassInfo classInfo){
         return classInfo.getAsmClassName() +
-                "~" + getMethodName();
+                "." + getMethodName()+getParams();
+    }
+    public String getMethodUri(String asmClassNmae){
+        return asmClassNmae + "." + getMethodName()+getParams();
     }
 }

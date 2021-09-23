@@ -54,55 +54,89 @@ public class GitWorkFlowTest {
     private FileUtil fileUtil;
 
     @Test
-    public void getBranchListTest() throws GitException, FileException {
-        String branch = "develop";
-        ProjectInfo projectInfo = projectInfoService.getById(2);
-        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepotId());
+    public void testGitClone(){
+        int projectId = 1;
+        String branch = "master";
+        ProjectInfo projectInfo = projectInfoService.getById(projectId);
+        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepoId());
         BaseRepository repository = RepositoryFactory.create(repoInfo);
-        Collection<Ref> refs = repository.refsList(projectInfo.getProjectUrl());
-        System.out.println(refHandle.getBranchNameList(refs));
-        System.out.println(refHandle.getTagNameList(refs));
-        String path = fileUtil.addPath(FileConst.DIFF_ROOT_PATH, projectInfo.getProjectName(), branch);
-        fileUtil.createDir(path);
-        long start = System.currentTimeMillis();
+        String path = fileUtil.getRepoPath(projectInfo, branch);
         repository.clone(projectInfo.getProjectUrl(), path, branch);
-        System.out.println(System.currentTimeMillis()-start);
     }
 
     @Test
-    public void getCommitListTest() throws IOException, GitAPIException {
-        String branch = "develop";
-        ProjectInfo projectInfo = projectInfoService.getById(2);
-        String gitPath = fileUtil.addPath(FileConst.DIFF_ROOT_PATH, projectInfo.getProjectName(), branch, ".git");
+    public void testGitPull(){
+        int projectId = 3;
+        String branch = "master";
+        ProjectInfo projectInfo = projectInfoService.getById(projectId);
+        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepoId());
+        BaseRepository repository = RepositoryFactory.create(repoInfo);
+        String path = fileUtil.getRepoPath(projectInfo, branch);
+        path = fileUtil.addPath(path, ".git");
+        repository.pull(path, branch);
+    }
+
+    @Test
+    public void testGetBranchList() throws GitException, FileException {
+//        String branch = "master";
+//        ProjectInfo projectInfo = projectInfoService.getById(1);
+//        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepoId());
+//        BaseRepository repository = RepositoryFactory.create(repoInfo);
+//        Collection<Ref> refs = repository.refsList(projectInfo.getProjectUrl());
+//        System.out.println(refHandle.getBranchNameList(refs));
+//        System.out.println(refHandle.getTagNameList(refs));
+//        String path = fileUtil.getRepoPath(projectInfo, branch);
+//        fileUtil.createDir(path);
+//        long start = System.currentTimeMillis();
+//        repository.clone(projectInfo.getProjectUrl(), path, branch);
+//        System.out.println(System.currentTimeMillis()-start);
+        String branch = "master";
+        ProjectInfo projectInfo = projectInfoService.getById(1);
+        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepoId());
+        BaseRepository repository = RepositoryFactory.create(repoInfo);
+        String path = fileUtil.getRepoPath(projectInfo, branch);
+        String gitPath = fileUtil.addPath(path, ".git");
+        List<String> branchs = repository.lsLocalBranchList(gitPath);
+        branchs.stream()
+                .forEach(branchStr -> System.out.println(branchStr));
+    }
+
+    @Test
+    public void testGetCommitList() throws IOException, GitAPIException {
+        String branch = "master";
+        ProjectInfo projectInfo = projectInfoService.getById(1);
+        String brandDir = fileUtil.getRepoPath(projectInfo, branch);
+//        String gitPath = fileUtil.addPath(brandDir, ".git");
+        String gitPath = "C:\\Users\\wl\\code-diff\\11\\yami-server\\.git";
         Repository repo = new FileRepository(gitPath);
         Git git = new Git(repo);
         RevWalk walk = new RevWalk(repo);
         for(Ref ref: git.branchList().call()){
             System.out.println("branchName: "+ ref.getName());
         }
-        Iterable<RevCommit> commits = git.log().add(repo.resolve(branch)).call();
+        Iterable<RevCommit> commits = git.log().call();
         for(RevCommit commit: commits){
             Date commitDate = commit.getAuthorIdent().getWhen();
             String commitUser = commit.getAuthorIdent().getName();
             String commitMsg =  commit.getFullMessage();
-            String commitId  = commit.getId().toString();
+            String commitId  = commit.getId().getName();
             System.out.println("commitId:"+commitId+", commit user: "+commitUser+
                     " , commit date: "+commitDate+ " ,commit msg: "+commitMsg);
         }
     }
 
     @Test
-    public void diffTest() throws GitAPIException, IOException {
+    public void testDiff() throws GitAPIException, IOException {
         String baseVersion = "master";
-        String newVersion = "develop";
+        String newVersion = "feature/v1.1.1";
         ProjectDiffParams params = new ProjectDiffParams();
-        params.setId(2);
+        params.setId(1);
         params.setOldVersion(baseVersion);
         params.setNewVersion(newVersion);
-        params.setOldCommitId("75fea70f5276edd0d79e8bf4acdaadea3217f09c");
-        params.setNewCommitId("8fb04f2a7edea8c3ed533a8863d538092a3b6a21");
+        params.setOldCommitId("122155db3626a4b39b8be5254bfe65e8139e39a2");
+        params.setNewCommitId("13509e9ddc4ea6ec240a7bd4628aeb82cfec9365");
 //        params.setDiffTypeCode(DiffTypeEnum.BRANCH_DIFF.getCode());
-        params.setDiffTypeCode(DiffTypeEnum.COMMIT_DIFF.getCode());
+        params.setDiffTypeCode(DiffTypeEnum.BRANCH_DIFF.getCode());
         params.setUpdateCode(true);
 
         List<ClassInfo>  classInfos = diffWorkFlow.diff(params);

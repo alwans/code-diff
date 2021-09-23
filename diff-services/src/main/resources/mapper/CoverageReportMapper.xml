@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.diff.services.mapper.CoverageReportMapper">
+
+    <resultMap id="BaseResultMap" type="com.test.diff.services.entity.CoverageReport">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+            <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+            <result property="reportType" column="report_type" jdbcType="INTEGER"/>
+            <result property="diffType" column="diff_type" jdbcType="INTEGER"/>
+            <result property="isUsed" column="is_used" jdbcType="BIT"/>
+            <result property="oldBranch" column="old_branch" jdbcType="VARCHAR"/>
+            <result property="newBranch" column="new_branch" jdbcType="VARCHAR"/>
+            <result property="isDelete" column="is_delete" jdbcType="BIT"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="lastTime" column="last_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_id,uuid,
+        report_type,diff_type,is_used,old_branch,
+        new_branch,is_delete,add_time,
+        last_time
+    </sql>
+</mapper>

@@ -2,7 +2,7 @@ package com.test.diff.services.convert;
 
 import com.test.diff.services.entity.RepoInfo;
 import com.test.diff.services.enums.CodeManageTypeEnum;
-import com.test.diff.services.vo.RepotInfoVO;
+import com.test.diff.services.vo.RepoInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 /**
  * @author wl
  */
-@Component("DeptInfoConvert")
+@Component("RepoInfoConvert")
 @Slf4j
-public class ReptInfoVOConvert implements ModelConvert<RepoInfo, RepotInfoVO>{
+public class RepoInfoVOConvert implements ModelConvert<RepoInfo, RepoInfoVO>{
 
 
     @Override
-    public RepotInfoVO convert(RepoInfo source) {
-        RepotInfoVO target = new RepotInfoVO();
+    public RepoInfoVO convert(RepoInfo source) {
+        RepoInfoVO target = new RepoInfoVO();
         if(source == null){
             return  target;
         }
@@ -27,7 +27,7 @@ public class ReptInfoVOConvert implements ModelConvert<RepoInfo, RepotInfoVO>{
     }
 
     @Override
-    public RepoInfo reconvert(RepotInfoVO target) {
+    public RepoInfo reconvert(RepoInfoVO target) {
         RepoInfo source = new RepoInfo();
         if(target == null){
             return source;

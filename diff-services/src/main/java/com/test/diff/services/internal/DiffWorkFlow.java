@@ -98,7 +98,7 @@ public class DiffWorkFlow {
         if(Objects.isNull(projectInfo)){
             throw new BizException(StatusCode.PROJECT_INFO_NOT_EXISTS);
         }
-        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepotId());
+        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepoId());
         if(Objects.isNull(repoInfo)){
             throw new BizException(StatusCode.REPO_INFO_NOT_EXITS);
         }
@@ -143,8 +143,10 @@ public class DiffWorkFlow {
         List<DiffEntry> list;
         list = newGit.diff().setOldTree(baseTree).setNewTree(newTree).setShowNameAndStatusOnly(true).call();
         return list.stream()
+                //只计算java文件
                 .filter(diffEntry -> diffEntry.getNewPath().endsWith(GitConst.JAVA_FILE_SUFFIX))
 //                .filter(diffEntry -> diffEntry.getNewPath().contains(GitConst.JAVA_DEFAULT_PATH))
+                //过滤掉test
                 .filter(diffEntry -> !diffEntry.getNewPath().contains(GitConst.TEST_DEFAULT_PATH))
                 .filter(diffEntry -> DiffEntry.ChangeType.ADD.equals(diffEntry.getChangeType()) ||
                         DiffEntry.ChangeType.MODIFY.equals(diffEntry.getChangeType()) ||

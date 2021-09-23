@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class RepotInfoVO extends BaseVO {
+public class RepoInfoVO extends BaseVO {
 
     private Long id;
 

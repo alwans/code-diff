@@ -18,4 +18,8 @@ public class BizException extends RuntimeException{
         super(statusCode.getDesc());
         this.statusCode = statusCode;
     }
+
+    public BizException(String msg){
+        super(msg);
+    }
 }

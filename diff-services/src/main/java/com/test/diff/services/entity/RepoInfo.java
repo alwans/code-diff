@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * 
- * @TableName diff_repot_info
+ * @TableName diff_repo_info
  */
 @TableName(value ="diff_repo_info")
 @Data

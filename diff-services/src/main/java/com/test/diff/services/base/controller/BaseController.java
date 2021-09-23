@@ -55,7 +55,7 @@ public class BaseController {
     @ExceptionHandler
     public @ResponseBody BaseResult<?> handleBizException(BizException bizException){
         if(Objects.isNull(bizException.getStatusCode())){
-            return BaseResult.error(StatusCode.OTHER_ERROR);
+            return BaseResult.error(StatusCode.OTHER_ERROR, bizException.getMessage());
         }
         return BaseResult.error(bizException.getStatusCode(), bizException.getStatusCode().getDesc());
     }

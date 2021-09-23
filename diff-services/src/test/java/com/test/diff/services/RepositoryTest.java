@@ -32,7 +32,7 @@ public class RepositoryTest {
     public void pullTest() throws GitException, FileException {
         String version = "develop";
         ProjectInfo projectInfo =  projectInfoService.getById(2);
-        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepotId());
+        RepoInfo repoInfo = repoInfoService.getById(projectInfo.getRepoId());
         BaseRepository repository = RepositoryFactory.create(repoInfo);
         String path = new FileUtil().addPath(FileConst.DIFF_ROOT_PATH, projectInfo.getProjectName(), version, ".git");
         repository.pull(path, version);

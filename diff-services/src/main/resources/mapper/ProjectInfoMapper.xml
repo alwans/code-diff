@@ -6,19 +6,23 @@
 
     <resultMap id="BaseResultMap" type="com.test.diff.services.entity.ProjectInfo">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="repotId" column="repot_id" jdbcType="INTEGER"/>
+            <result property="repoId" column="repo_id" jdbcType="INTEGER"/>
+            <result property="env" column="env" jdbcType="VARCHAR"/>
             <result property="projectGroup" column="project_group" jdbcType="VARCHAR"/>
             <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
             <result property="projectUrl" column="project_url" jdbcType="VARCHAR"/>
-            <result property="isDiable" column="is_diable" jdbcType="BIT"/>
+            <result property="collectStatus" column="collect_status" jdbcType="INTEGER"/>
+            <result property="reportStatus" column="report_status" jdbcType="INTEGER"/>
+            <result property="isDisable" column="is_disable" jdbcType="BIT"/>
             <result property="isDelete" column="is_delete" jdbcType="BIT"/>
             <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
             <result property="lastTime" column="last_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,repot_id,project_group,
-        project_name,project_url,is_diable,
-        is_delete,add_time,last_time
+        id,repo_id,env,project_group,
+        project_name,project_url,
+        collect_status,report_status,
+        is_disable,is_delete,add_time,last_time
     </sql>
 </mapper>

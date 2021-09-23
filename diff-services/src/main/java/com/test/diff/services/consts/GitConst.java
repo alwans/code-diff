@@ -11,7 +11,8 @@ public class GitConst {
 
     public static final String CLASS_FILE_SUFFIX = ".class";
 
-    public static final String JAVA_DEFAULT_PATH = "src/main/java";
+    public static final String JAVA_DEFAULT_PATH = "src/main/java/";
 
     public static final String TEST_DEFAULT_PATH  = "src/main/test";
+
 }

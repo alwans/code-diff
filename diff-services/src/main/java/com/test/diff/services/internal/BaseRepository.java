@@ -8,6 +8,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -57,10 +58,9 @@ public abstract class BaseRepository {
     /**
      * 获取本地分支列表
      * @param local_git_path 对应项目分支的.git文件路径
-     * @param branch 分支名
      * @return 本地分支列表
      */
-    public abstract List<String> lsLocalBranchList(String local_git_path, String branch);
+    public abstract List<String> lsLocalBranchList(String local_git_path );
 
     /**
      * 获取项目tag列表
@@ -69,6 +69,13 @@ public abstract class BaseRepository {
      * @return 本地tag列表
      */
     public abstract List<String> lsLocalTagList(String local_git_path, String branch);
+
+    /**
+     * 获取项目commit id记录
+     * @param local_git_path 对应项目分支的.git文件路径
+     * @return commit id 列表
+     */
+    public abstract List<String> lsLocalCommitList(String local_git_path)  throws IOException;
 
     /**
      * 获取项目的分支列表

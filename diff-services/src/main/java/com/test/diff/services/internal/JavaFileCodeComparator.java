@@ -1,6 +1,7 @@
 package com.test.diff.services.internal;
 
 import cn.hutool.crypto.SecureUtil;
+import com.github.javaparser.JavaParser;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
@@ -11,6 +12,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.test.diff.common.domain.ClassInfo;
 import com.test.diff.common.domain.MethodInfo;
 import com.test.diff.common.enums.DiffResultTypeEnum;
+import com.test.diff.services.consts.GitConst;
 import com.test.diff.services.enums.StatusCode;
 import com.test.diff.services.exceptions.BizException;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +33,14 @@ public class JavaFileCodeComparator implements ICodeComparator{
 
     @Override
     public ClassInfo getDiffClassInfo(DiffEntry diffEntry, String oldFilePath, String newFilePath) {
-//        String className = diffEntry.getNewPath().split("\\.")[0].split(GitConst.JAVA_DEFAULT_PATH)[1];
-        String className = diffEntry.getNewPath().split("\\.")[0];
-//        String packName = diffEntry.getNewPath().split("/")[0];
-        String packName = "";
+        String className,packName;
+        if(diffEntry.getNewPath().contains(GitConst.JAVA_DEFAULT_PATH)){
+            className = diffEntry.getNewPath().split("\\.")[0].split(GitConst.JAVA_DEFAULT_PATH)[1];
+            packName = diffEntry.getNewPath().split("/")[0];
+        }else{
+            className = diffEntry.getNewPath().split("\\.")[0];
+            packName = "";
+        }
 
         //新增类
         if(DiffEntry.ChangeType.ADD.equals(diffEntry.getChangeType())){
@@ -109,11 +115,11 @@ public class JavaFileCodeComparator implements ICodeComparator{
      * @param classFile
      * @return
      */
-    public static List<MethodInfo> parseMethods(String classFile)   {
-        try {
-            List<MethodInfo> list = new ArrayList<>();
-            FileInputStream in = new FileInputStream(classFile);
-            CompilationUnit cu = StaticJavaParser.parse(in);
+    public static List<MethodInfo> parseMethods(String classFile){
+        List<MethodInfo> list = new ArrayList<>();
+        try (FileInputStream in = new FileInputStream(classFile)){
+            JavaParser javaParser = new JavaParser();
+            CompilationUnit cu = javaParser.parse(in).getResult().orElseThrow(() -> new BizException(StatusCode.JAVA_PARSER_ERROR));
             //由于jacoco不会统计接口覆盖率，没比较计算接口的方法，此处排除接口类
             final List<?> types = cu.getTypes();
             boolean isInterface = types.stream().filter(t -> t instanceof ClassOrInterfaceDeclaration).anyMatch(t -> ((ClassOrInterfaceDeclaration) t).isInterface());
@@ -123,7 +129,7 @@ public class JavaFileCodeComparator implements ICodeComparator{
             cu.accept(new MethodVisitor(), list);
             return list;
         } catch (Exception e) {
-            log.error("使用javaParser解析{}文件失败", classFile);
+            log.error("使用javaParser解析{}文件失败", classFile, e);
             throw new BizException(StatusCode.JAVA_PARSER_ERROR);
         }
     }
@@ -142,13 +148,17 @@ public class JavaFileCodeComparator implements ICodeComparator{
             StringBuilder params = new StringBuilder();
             NodeList<Parameter> parameters = n.getParameters();
             if(!CollectionUtils.isEmpty(parameters)){
+                params.append("(");
                 for (int i = 0; i < parameters.size(); i++) {
                     String param = parameters.get(i).getType().toString();
                     params.append(param.replaceAll(" ", ""));
                     if(i != parameters.size() -1){
-                        params.append("&");
+                        params.append(",");
                     }
                 }
+                params.append(")");
+            }else{
+                params.append("()");
             }
             MethodInfo methodInfo = MethodInfo.builder()
                     .md5(md5)

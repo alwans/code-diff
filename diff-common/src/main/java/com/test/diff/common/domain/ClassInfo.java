@@ -29,7 +29,8 @@ public class ClassInfo implements Serializable {
      * @return
      */
     public String getAsmClassName(){
-        return this.packageName.replaceAll(".","/")+this.className+ GitConst.JAVA_FILE_SUFFIX;
+//        return this.packageName.replaceAll(".","/")+this.className+ GitConst.JAVA_FILE_SUFFIX;
+        return this.className;
     }
 
 }

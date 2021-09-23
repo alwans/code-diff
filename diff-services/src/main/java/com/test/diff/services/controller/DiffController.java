@@ -38,6 +38,7 @@ public class DiffController {
         }
         List<ClassInfo> list = diffWorkFlow.diff(params);
         String sequence = JacksonUtil.serialize(list);
+        System.out.println(sequence);
         return BaseResult.success(sequence);
 
     }

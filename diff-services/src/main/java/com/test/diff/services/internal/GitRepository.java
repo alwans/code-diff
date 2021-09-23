@@ -12,14 +12,18 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.internal.storage.file.GC;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.storage.pack.PackConfig;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
@@ -27,9 +31,8 @@ import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.text.ParseException;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -40,9 +43,6 @@ import static java.util.stream.Collectors.toList;
 @Getter
 @Setter
 public class GitRepository extends BaseRepository {
-
-    @Resource
-    private FileUtil fileUtil;
 
     public GitRepository(RepoInfo repoInfo){super(repoInfo);}
 
@@ -124,13 +124,17 @@ public class GitRepository extends BaseRepository {
     }
 
     @Override
-    public List<String> lsLocalBranchList(String local_git_path, String branch){
+    public List<String> lsLocalBranchList(String local_git_path){
         //先更新代码
-        pull(local_git_path, branch);
+//        pull(local_git_path, branch);
 
         Git git = getGit(local_git_path);
         try {
-            return git.branchList().call().stream().map(Ref::getName).collect(toList());
+            return git.branchList().setListMode(ListBranchCommand.ListMode.ALL).call().stream()
+                    .map(Ref::getName)
+                    .filter(branchStr -> !branchStr.contains("refs/heads"))
+                    .map(branchStr -> branchStr.replace("refs/remotes/origin/",""))
+                    .collect(toList());
         } catch (GitAPIException e) {
             e.printStackTrace();
             log.error("获取本地分支列表失败", e);
@@ -151,6 +155,27 @@ public class GitRepository extends BaseRepository {
             log.error("获取本地tag列表失败", e);
             throw new GitException(StatusCode.GIT_LOCAL_TAG_ERROR);
         }
+    }
+
+    @Override
+    public List<String> lsLocalCommitList(String local_git_path) throws IOException {
+        Repository repo = new FileRepository(local_git_path);
+        Git git = new Git(repo);
+        List<String> list = new ArrayList<>();
+        try {
+//            Iterable<RevCommit> commits = git.log().add(repo.resolve(branch)).call();
+            Iterable<RevCommit> commits = git.log().call();
+            for(RevCommit commit: commits){
+                list.add(commit.getId().getName());
+            }
+        } catch (GitAPIException e) {
+            log.error("{} 获取commit 信息失败", local_git_path, e);
+            throw new GitException("获取commit信息失败");
+        }finally {
+            repo.close();
+            git.close();
+        }
+        return list;
     }
 
 

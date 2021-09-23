@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,6 +39,11 @@ public class JacksonUtil {
         return mapper.writeValueAsBytes(object);
     }
 
+    public static void serializeByStream(OutputStream writer, Object object) throws IOException {
+        mapper.writeValue(writer, object);
+    }
+
+
     public static <T> T deserialize(byte[] bytes, Class<T> type) throws IOException {
         return mapper.readValue(bytes, type);
     }
@@ -45,12 +52,20 @@ public class JacksonUtil {
         return mapper.readValue(sequence, type);
     }
 
+    public static <T> T deserialize(InputStream reader, Class<T> type) throws IOException {
+        return mapper.readValue(reader, type);
+    }
+
     public static <T> List<T> deserializeArray(byte[] bytes, Class<T> type) throws IOException {
         return mapper.readValue(bytes, getCollectionType(ArrayList.class, type));
     }
 
     public static <T> List<T> deserializeArray(String sequence, Class<T> type) throws IOException {
         return mapper.readValue(sequence, getCollectionType(ArrayList.class, type));
+    }
+
+    public static <T> List<T> deserializeArray(InputStream reader, Class<T> type) throws IOException {
+        return mapper.readValue(reader, getCollectionType(ArrayList.class, type));
     }
 
     private static JavaType getCollectionType(Class<? extends Collection> collectionClass, Class<?> elementClasses){

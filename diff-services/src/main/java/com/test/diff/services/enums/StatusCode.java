@@ -10,6 +10,8 @@ public enum StatusCode {
     SUCCESS(10000, "成功"),
     PARAMS_ERROR(10010, "参数错误"),
     OTHER_ERROR(-1, "其他错误"),
+    UNKNOWN_COLLECT_STATUS(10030, "未知的收集状态"),
+    UNKNOWN_REPORT_STATUS(10040, "未知的报告状态"),
 
     //git相关错误
     GIT_ERROR(20010, "git操作异常"),
@@ -23,6 +25,7 @@ public enum StatusCode {
     GIT_BRANCH_NOT_EXISTS(20090, "分支不存在"),
     GIT_PARSER_TREE_ERROR(20100, "生成代码解析树失败"),
     GIT_REPO_TYPE_NOT_EXISTS(20200, "仓库类型不存在"),
+    GIT_LOCAL_COMMIT_ERROR(20210, "获取本地commit列表失败"),
 
 
     //解析相关错误
@@ -35,7 +38,13 @@ public enum StatusCode {
 
     //操作文件相关
     File_ERROR(40010, "文件操作异常"),
-    FILE_GIT_FILE_ERROR(40020, "git文件路径错误");
+    FILE_GIT_FILE_ERROR(40020, "git文件路径错误"),
+    FILE_NOT_EXISTS(40020, "文件不存在"),
+
+    //操作jacoco相关
+    JACOCO_DUMP_ERROR(50010, "jacoco dump 数据失败"),
+    JACOCO_MERGE_ERROR(50020, "jacoco merge 数据失败"),
+    JACOCO_REPORT_ERROR(50030, "jacoco report 生成失败");
 
 
     private int code;
