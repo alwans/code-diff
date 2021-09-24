@@ -100,7 +100,7 @@
             <artifactId>org.jacoco.cli</artifactId>
             <version>0.8.8-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>G:/jvm/jacoco/org.jacoco.cli/target/org.jacoco.cli-0.8.8-SNAPSHOT-nodeps.jar</systemPath>
+            <systemPath>${project.basedir}/../lib/jacoco-cli.jar</systemPath>
 <!--            <classifier>nodeps</classifier>-->
         </dependency>
 
