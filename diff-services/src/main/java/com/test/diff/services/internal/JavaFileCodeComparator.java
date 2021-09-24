@@ -152,9 +152,8 @@ public class JavaFileCodeComparator implements ICodeComparator{
                 for (int i = 0; i < parameters.size(); i++) {
                     String param = parameters.get(i).getType().toString();
                     params.append(param.replaceAll(" ", ""));
-                    if(i != parameters.size() -1){
-                        params.append(",");
-                    }
+                        //和asm一致，每个参数都使用分号结尾
+                        params.append(";");
                 }
                 params.append(")");
             }else{

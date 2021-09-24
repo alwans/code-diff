@@ -5,10 +5,7 @@ import com.test.diff.services.convert.ModelConvert;
 import com.test.diff.services.entity.CoverageApp;
 import com.test.diff.services.entity.CoverageReport;
 import com.test.diff.services.entity.ProjectInfo;
-import com.test.diff.services.enums.CollectStatusEnum;
-import com.test.diff.services.enums.DiffTypeEnum;
-import com.test.diff.services.enums.ReportTypeEnum;
-import com.test.diff.services.enums.StatusCode;
+import com.test.diff.services.enums.*;
 import com.test.diff.services.params.CollectParams;
 import com.test.diff.services.params.ListProjectParams;
 import com.test.diff.services.params.ProjectDiffParams;
@@ -196,6 +193,8 @@ public class WebSiteController {
         coverageAppService.updateBatchById(list);
         //更新项目收集状态为：初始状态
         projectInfo.setCollectStatus(CollectStatusEnum.INIT.getCode());
+        //更新项目报告状态为：初始状态
+        projectInfo.setReportStatus(ReportStatusEnum.INIT.getCode());
         projectInfoService.updateById(projectInfo);
         return BaseResult.success(null, "结束收集操作成功");
     }

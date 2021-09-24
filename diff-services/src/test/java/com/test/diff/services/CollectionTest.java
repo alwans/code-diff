@@ -39,4 +39,12 @@ public class CollectionTest {
         list.stream().filter(item -> item.equals("a"))
                 .forEach(item -> System.out.println(item));
     }
+
+    @Test
+    public void testArraySplit(){
+//        String str = "String;String;Integer;";
+        String str = "Ljava/lang/String;Lcom/beitai/iot/data/enums/SourceType;";
+        String[] arr = str.split(";");
+        System.out.println(arr);
+    }
 }

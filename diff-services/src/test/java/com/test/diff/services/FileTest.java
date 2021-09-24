@@ -154,7 +154,7 @@ public class FileTest {
 
     @Test
     public void testClassPaths(){
-        String branPath = "G:\\jvm\\gitlab\\jvmTest";
+        String branPath = "C:\\Users\\wl\\code-diff\\11\\yami-server";
         List<String> list = fileUtil.getAllClassFilePathsByProject(branPath);
         System.out.println(list.size());
         list.stream().forEach(path -> System.out.println(path));
