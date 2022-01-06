@@ -2,9 +2,9 @@
 **用于java代码的code-dif && 覆盖数据收集**
 
 
-## 部署流程  
+## docker部署  
 
-> *1.通过nginx部署 /dist/dist.zip 站点*
+<!-- > *1.通过nginx部署 /dist/dist.zip 站点*
 
 > *2.执行 /sql/coverage.sql*
 
@@ -12,7 +12,8 @@
 
 > *4.启动 diff-services服务*  *java -jar diff-service-1.0.0.jar*
 
-> *5.访问web服务*
+> *5.访问web服务* -->
+待更新...
 
 ## 示图  
 
@@ -27,7 +28,7 @@
 #### 3.2 支持不同commitId 合并收集
 ![image](https://user-images.githubusercontent.com/13557160/148342008-71fa3f30-8c84-48f1-8b74-9b631e12bbe0.png)
 
-### 4. 随时查看报告  
+### 4. 实时查看报告  
 #### 4.1 支持增量 | 全量报告  
 #### 4.2 支持分支增量 | commitId增量
 ![image](https://user-images.githubusercontent.com/13557160/148342243-1f83629c-7447-45af-a842-25691e7df1bc.png)
