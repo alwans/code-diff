@@ -2,6 +2,7 @@ package com.test.diff.services;
 
 import com.test.diff.services.entity.CoverageReport;
 import com.test.diff.services.service.CoverageReportService;
+import com.test.diff.services.service.impl.CoverageReportServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class CoverageReportTest {
 
     @Resource
-    private CoverageReportService coverageReportService;
+    private CoverageReportServiceImpl coverageReportService;
 
     @Test
     public void testInsert(){

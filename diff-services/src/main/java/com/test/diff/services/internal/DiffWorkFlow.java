@@ -156,18 +156,27 @@ public class DiffWorkFlow {
 
 
     private Git syncCode(BaseRepository baseRepository, ProjectInfo projectInfo,
-                         String branch,String commitId, boolean isBranchDiff) throws IOException {
-        return updateCode(baseRepository, FileConst.DEFAULT_EMPTY_PATH,
+                         String branch, String commitId, boolean isBranchDiff) throws IOException {
+        //这里直接生成路径
+        String branch_path = fileUtil.getRepoPath(projectInfo, branch);
+        if(!isBranchDiff){
+            branch_path = branch_path + "_" + commitId;
+        }
+        return updateCode(baseRepository, branch_path,
                 projectInfo.getProjectName(),projectInfo.getProjectUrl(), branch, commitId, isBranchDiff);
     }
 
     /**
+     * 暂时不用了,这里是直接从code-diff根目录开始建项目文件夹的
+     * 后期都改成了由group/env/project，这里就不适用了，没有传group和env，所以直接不用
+     * 改为上游方法中直接调用fileUtil类中方法直接生成path
      * 检查项目路径是否正确
      * @param path 项目路径
      * @param projectName 项目名
      * @param branch 分支名
      * @return
      */
+    @Deprecated
     private String checkProjectPath(String path, String projectName, String branch,
                                     String commitId, boolean isBranchDiff){
         if(!path.startsWith(FileConst.DIFF_ROOT_PATH)){
@@ -194,7 +203,7 @@ public class DiffWorkFlow {
     private Git updateCode(BaseRepository repository, String path,
                            String projectName, String projectUrl,
                            String branch, String commitId, boolean isBranchDiff) throws IOException {
-        path = checkProjectPath(path, projectName, branch, commitId, isBranchDiff);
+//        path = checkProjectPath(path, projectName, branch, commitId, isBranchDiff);
         String gitPath = fileUtil.addPath(path, GitConst.GIT_FILE_SUFFIX);
         if(new File(path).exists()){
             if(this.threadLocal.get().isUpdateCode() && isBranchDiff){

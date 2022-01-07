@@ -194,4 +194,16 @@ public class FileTest {
                 });
     }
 
+    @Test
+    public void testFindSelectedClassFilePath(){
+        String key = "CoverageAppServiceImpl.class";
+        if(!key.contains(File.separator)){
+            key = key.replace("/", File.separator);
+        }
+        System.out.println(key);
+        String path = fileUtil.getClassFilePath("G:\\jvm\\github\\code-diff",
+                key);
+        System.out.println(path);
+    }
+
 }

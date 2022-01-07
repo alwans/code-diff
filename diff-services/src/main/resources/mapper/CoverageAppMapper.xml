@@ -11,6 +11,8 @@
             <result property="status" column="status" jdbcType="BOOLEAN"/>
             <result property="host" column="host" jdbcType="VARCHAR"/>
             <result property="port" column="port" jdbcType="VARCHAR"/>
+            <result property="includes" column="includes" jdbcType="VARCHAR"/>
+            <result property="excludes" column="excludes" jdbcType="VARCHAR"/>
             <result property="isDisable" column="is_disable" jdbcType="BOOLEAN"/>
             <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
             <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
@@ -20,7 +22,7 @@
     <sql id="Base_Column_List">
         id,project_id,app_name,
         status,host,port,
-        is_disable,is_delete,add_time,
-        last_time
+        includes,excludes,is_disable,
+        is_delete,add_time,last_time
     </sql>
 </mapper>

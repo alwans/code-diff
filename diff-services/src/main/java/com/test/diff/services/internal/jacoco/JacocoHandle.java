@@ -9,6 +9,7 @@ import org.jacoco.cli.internal.core.tools.ExecFileLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -98,20 +99,24 @@ public class JacocoHandle {
     /**
      * merge 合并多个exec数据文件，
      * 2中情况可合并：一：同分支同commit id ；二：同分支，不同commit id
+     * @param projectId 项目id 不同commit id合并时，需要知道项目id来找出差异类，针对差异类做合并; 同commit可传0
+     * @param localPort 本服务对应的端口  --> @Value("${server.port}")
      * @param newSaveFilePath 合并后保存的文件绝对路径
      * @param execFiles exec文件数组
      * @throws Exception
      */
-    public static void merge(String newSaveFilePath, File... execFiles) throws Exception {
+    public static void merge(long projectId, String localPort, String newSaveFilePath, File... execFiles) throws Exception {
         List<String> params = new ArrayList<>();
         params.add("merge");
+        params.add("--id");
+        params.add(projectId+"");
         params.add("--destfile");
         params.add(newSaveFilePath);
         for(File file : execFiles){
             params.add(file.getAbsolutePath());
         }
         params.add("--diffPort");
-        params.add("1990");
+        params.add(localPort);
         int result = JacocoApi.execute(params.toArray(new String[params.size()]));
         if(result == -1){
             throw new BizException("merge 失败");
@@ -131,7 +136,8 @@ public class JacocoHandle {
                               List<String> classFilePaths,
                               List<String> sourceFilePaths,
                               String reportPath,
-                              String diffResult) throws Exception {
+                              String diffResult,
+                              String filterRules) throws Exception {
         List<String> params = new ArrayList<>();
         params.add("report");
         params.add(execFilePath);
@@ -149,7 +155,12 @@ public class JacocoHandle {
             params.add("--diffFiles");
             params.add(diffResult);
         }
-        int result = JacocoApi.execute(params.toArray(new String[params.size()]));
+        if(StringUtils.isNotBlank(filterRules)){
+            params.add("--filterRules");
+            params.add(filterRules);
+        }
+        log.info("jacoco report 参数："+params);
+        int result = JacocoApi.execute(params.toArray(new String[0]));
         if(result == -1){
             throw new BizException("报告生成失败");
         }

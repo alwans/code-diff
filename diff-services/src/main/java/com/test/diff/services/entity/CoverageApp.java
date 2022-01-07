@@ -52,6 +52,18 @@ public class CoverageApp implements Serializable {
     private String port;
 
     /**
+     * 匹配通配符
+     */
+    @TableField(value = "includes")
+    private String includes;
+
+    /**
+     * 排除通配符
+     */
+    @TableField(value = "excludes")
+    private String excludes;
+
+    /**
      * 是否禁用
      */
     @TableField(value = "is_disable")
@@ -96,6 +108,8 @@ public class CoverageApp implements Serializable {
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getHost() == null ? other.getHost() == null : this.getHost().equals(other.getHost()))
             && (this.getPort() == null ? other.getPort() == null : this.getPort().equals(other.getPort()))
+            && (this.getIncludes() == null ? other.getIncludes() == null : this.getIncludes().equals(other.getIncludes()))
+            && (this.getExcludes() == null ? other.getExcludes() == null : this.getExcludes().equals(other.getExcludes()))
             && (this.getIsDisable() == null ? other.getIsDisable() == null : this.getIsDisable().equals(other.getIsDisable()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
             && (this.getAddTime() == null ? other.getAddTime() == null : this.getAddTime().equals(other.getAddTime()))
@@ -112,6 +126,8 @@ public class CoverageApp implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getHost() == null) ? 0 : getHost().hashCode());
         result = prime * result + ((getPort() == null) ? 0 : getPort().hashCode());
+        result = prime * result + ((getIncludes() == null) ? 0 : getIncludes().hashCode());
+        result = prime * result + ((getExcludes() == null) ? 0 : getExcludes().hashCode());
         result = prime * result + ((getIsDisable() == null) ? 0 : getIsDisable().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getAddTime() == null) ? 0 : getAddTime().hashCode());
@@ -131,6 +147,8 @@ public class CoverageApp implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", host=").append(host);
         sb.append(", port=").append(port);
+        sb.append(", includes=").append(includes);
+        sb.append(", excludes=").append(excludes);
         sb.append(", isDisable=").append(isDisable);
         sb.append(", isDelete=").append(isDelete);
         sb.append(", addTime=").append(addTime);

@@ -123,6 +123,15 @@ public class WebSiteController {
         return coverageReportService.report(params);
     }
 
+    @GetMapping( "/getReportUri")
+    public BaseResult getReportUrl(@RequestParam("id") int projectId){
+        if(projectId == 0){
+            return BaseResult.error(StatusCode.PARAMS_ERROR, "项目id不允许为空");
+        }
+        return coverageReportService.getReportURI(projectId);
+    }
+
+
     /**
      * 开始或继续收集
      * @param apps 应用id列表

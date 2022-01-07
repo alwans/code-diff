@@ -40,25 +40,23 @@ public class FileController {
         if(Objects.isNull(projectInfo)){
             return BaseResult.error(StatusCode.PROJECT_INFO_NOT_EXISTS);
         }
+        String repoPath;
         if(StringUtils.isNotBlank(fileParams.getCommitId())){
-            fileParams.setBranch(fileParams.getBranch()+"_"+fileParams.getCommitId());
+            repoPath = fileUtil.getRepoCommitPath(projectInfo, fileParams.getBranch(), fileParams.getCommitId());
+        }else{
+            repoPath =  fileUtil.getRepoPath(projectInfo, fileParams.getBranch());
         }
-        String repoPath = fileUtil.getRepoPath(projectInfo, fileParams.getBranch());
-        String path = fileUtil.addPath(repoPath,
-                FileConst.JAVA_CLASS_FILE_PARENT_DIR_NAME,
-                FileConst.JAVA_CLASS_FILE_DIR_NAME);
-        if(fileParams.getClassName().contains("/")){
-            String[] arr = fileParams.getClassName().split("/");
-            path = fileUtil.addPaths(path, arr);
-        }
-        path = path + GitConst.CLASS_FILE_SUFFIX;
-        if(fileUtil.isExist(path)){
+        String classSubPath = fileParams.getClassName() + GitConst.CLASS_FILE_SUFFIX;
+        String path = fileUtil.getClassFilePath(repoPath, classSubPath);
+        if(!Objects.isNull(path) && fileUtil.isExist(path)){
             return BaseResult.success(path);
         }
+        log.error("未找到{} class文件路径，工程id: {}, branch: {}, commitId: {}", fileParams.getId(), fileParams.getClassName(),
+                fileParams.getBranch(), fileParams.getCommitId());
         return BaseResult.error(StatusCode.OTHER_ERROR, "class文件不存在");
     }
 
-    @GetMapping(value = "copy/project")
+    @GetMapping( "copy/project")
     public BaseResult copyProjectFile(@RequestParam("path") String path,
                                       @RequestParam("branch") String branch,
                                       @RequestParam("id") int projectId){

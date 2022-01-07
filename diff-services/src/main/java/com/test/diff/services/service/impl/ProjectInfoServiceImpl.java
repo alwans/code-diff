@@ -22,6 +22,7 @@ import com.test.diff.services.vo.ProjectVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.jacoco.cli.internal.core.tools.ExecFileLoader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -41,6 +42,9 @@ import java.util.Objects;
 @Slf4j
 public class ProjectInfoServiceImpl extends ServiceImpl<ProjectInfoMapper, ProjectInfo>
     implements ProjectInfoService {
+
+    @Value("${server.port}")
+    private String localPort;
 
     @Resource
     private FileUtil fileUtil;
@@ -68,6 +72,7 @@ public class ProjectInfoServiceImpl extends ServiceImpl<ProjectInfoMapper, Proje
     public List<ProjectInfo> getInfoByName(String projectName) {
         LambdaQueryWrapper<ProjectInfo> query = new LambdaQueryWrapper();
         query.eq(ProjectInfo::getProjectName, projectName);
+        query.eq(ProjectInfo::getIsDelete, false);
         return projectInfoMapper.selectList(query);
     }
 
@@ -106,7 +111,7 @@ public class ProjectInfoServiceImpl extends ServiceImpl<ProjectInfoMapper, Proje
         //1.获取数据，先存放在uuid目录中
         String execUuidPath = dumpData(coverageApp, projectInfo, report.getUuid(), execName);
         //2.合并uuid目录中的exec文件
-        mergeExec(execUuidPath);
+        mergeExec(execUuidPath, projectInfo.getId());
         //3.把第一步dump下来的数据移至对应分支文件夹中 && 合并分支目录中的exec文件，并删除老数据
         String oriExecPath = fileUtil.addPath(execUuidPath, execName);
         String branchDir = getBranchPath(projectInfo,
@@ -118,7 +123,7 @@ public class ProjectInfoServiceImpl extends ServiceImpl<ProjectInfoMapper, Proje
             log.error("{}文件移动至{}目录失败, 停止合并操作分支目录中相关exec数据", oriExecPath, branchDir, e);
             return;
         }
-        mergeExec(branchDir);
+        mergeExec(branchDir, projectInfo.getId());
         deleteOldExec(branchDir);
         log.info("{}应用探针数据拉取合并完成...", coverageApp.getAppName());
     }
@@ -138,7 +143,7 @@ public class ProjectInfoServiceImpl extends ServiceImpl<ProjectInfoMapper, Proje
         }
     }
 
-    private void mergeExec(String dirPath){
+    private void mergeExec(String dirPath, long projectId){
         File dir = new File(dirPath);
         if(!dir.exists()){
             log.error("合并数据的{}目录不存在", dir.getAbsolutePath());
@@ -156,7 +161,7 @@ public class ProjectInfoServiceImpl extends ServiceImpl<ProjectInfoMapper, Proje
         }
         String newFilePath = fileUtil.addPath(dirPath, JacocoConst.EXEC_MERGE_FILE_NAME);
         try {
-            JacocoHandle.merge(newFilePath, execFiles);
+            JacocoHandle.merge(projectId, localPort, newFilePath, execFiles);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("合并{}目录中的exec文件失败", dirPath, e);

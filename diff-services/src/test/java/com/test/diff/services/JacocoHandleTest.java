@@ -14,6 +14,7 @@ import org.jacoco.cli.internal.core.data.ExecutionDataStore;
 import org.jacoco.cli.internal.core.tools.ExecFileLoader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,6 +30,9 @@ public class JacocoHandleTest {
 
     @Resource
     private DiffWorkFlow diffWorkFlow;
+
+    @Value("${server.port}")
+    private String port;
 
     @Test
     public void testDump() throws Exception {
@@ -47,7 +51,7 @@ public class JacocoHandleTest {
                 return pathname.getAbsolutePath().endsWith(".exec");
             }
         });
-        JacocoHandle.merge(newEexcFilePath, files);
+        JacocoHandle.merge(0, port, newEexcFilePath, files);
     }
 
     @Test
@@ -67,10 +71,11 @@ public class JacocoHandleTest {
         Collection<ExecutionData> data = store.getContents();
         data.stream()
                 .forEach(exec -> {
-                    if(exec.getName().equals("com/beitai/inventory/managment/service/impl/ImmMerchandiseInventoryServiceImpl")
-                            || exec.getName().equals("com/beitai/inventory/managment/service/impl/ImmSingleProductRecordServiceImpl")){
-                        System.out.println(exec);
-                    }
+//                    if(exec.getName().equals(" com/scm/financial/service/api/receipt/entity/FundCollectionRegisterImport")
+//                            || exec.getName().equals("com/beitai/inventory/managment/service/impl/ImmSingleProductRecordServiceImpl")){
+//                        System.out.println(exec);
+//                    }
+                    System.out.println(exec.getName());
                 });
     }
 
@@ -95,7 +100,7 @@ public class JacocoHandleTest {
         String reportPath = "C:\\Users\\wl\\Desktop\\report";
         FileUtil fileUtil = new FileUtil();
         JacocoHandle.report(execFilePath, fileUtil.getAllClassFilePathsByProject(projectDir),
-                fileUtil.getAllSourcePathsByProject(projectDir),reportPath, JacksonUtil.serialize(classInfos));
+                fileUtil.getAllSourcePathsByProject(projectDir),reportPath, JacksonUtil.serialize(classInfos), null);
     }
 
 }

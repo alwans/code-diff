@@ -92,6 +92,58 @@ public class FileUtil {
                 branch);
     }
 
+    /**
+     * 返回指定commit id绝对路径
+     * @param projectInfo
+     * @param branch
+     * @param commit
+     * @return
+     */
+    public String getRepoCommitPath(ProjectInfo projectInfo, String branch, String commit){
+        String path = getRepoPath(projectInfo, branch);
+        path = path + "_" + commit;
+        return path;
+    }
+
+    /**
+     * 根据关键字获取单个指定class文件绝对路径
+     * @param rootPath 搜索根目录
+     * @param key 关键字符串
+     * @return
+     */
+    public String getClassFilePath(String rootPath, String key){
+        //简单做下windows平台处理
+        if(!key.contains(File.separator)){
+            key = key.replace("/", File.separator);
+        }
+        String path = null;
+        List<String> files = getAllClassFilePathsByProject(rootPath);
+        for(String file : files){
+            path = findClassFileByKey(new File(file), key);
+        }
+        return path;
+    }
+
+    private String findClassFileByKey(File file, String key){
+        String path = null;
+        if(file.isDirectory()){
+            for(File f: file.listFiles()){
+                path = findClassFileByKey(f, key);
+                if(path != null){
+                    return path;
+                }
+            }
+        }else{
+            if(file.getAbsolutePath().contains(key)){
+                return file.getAbsolutePath();
+            }
+        }
+        if(path!= null){
+            return path;
+        }
+        return null;
+    }
+
     public boolean isExist(String path){
         return new File(path).exists() ? true : false;
     }
@@ -109,9 +161,17 @@ public class FileUtil {
     }
 
     public List<String> getAllClassFilePathsByProject(String branchDirPath){
+        /**
+         * gradle编译的路径是build/classes/
+         * maven编译的路径是target/classes/
+         * 之前没考虑gradle这种，写死了target/classes
+         * 现在改为只检查是否包含classes
+         */
+//        return getListDirByKey(branchDirPath,
+//                addPath(FileConst.JAVA_CLASS_FILE_PARENT_DIR_NAME,
+//                        FileConst.JAVA_CLASS_FILE_DIR_NAME));
         return getListDirByKey(branchDirPath,
-                addPath(FileConst.JAVA_CLASS_FILE_PARENT_DIR_NAME,
-                        FileConst.JAVA_CLASS_FILE_DIR_NAME));
+                FileConst.JAVA_CLASS_FILE_DIR_NAME);
     }
 
     public List<String> getListDirByKey(String dirPath, String key){

@@ -148,16 +148,14 @@ public class JavaFileCodeComparator implements ICodeComparator{
             StringBuilder params = new StringBuilder();
             NodeList<Parameter> parameters = n.getParameters();
             if(!CollectionUtils.isEmpty(parameters)){
-                params.append("(");
                 for (int i = 0; i < parameters.size(); i++) {
                     String param = parameters.get(i).getType().toString();
                     params.append(param.replaceAll(" ", ""));
-                        //和asm一致，每个参数都使用分号结尾
-                        params.append(";");
+                    //和asm一致，每个参数都使用分号结尾
+                    params.append(";");
                 }
-                params.append(")");
             }else{
-                params.append("()");
+                params.append("");
             }
             MethodInfo methodInfo = MethodInfo.builder()
                     .md5(md5)

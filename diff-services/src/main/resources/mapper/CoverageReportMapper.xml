@@ -8,11 +8,12 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="projectId" column="project_id" jdbcType="INTEGER"/>
             <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
-            <result property="reportType" column="report_type" jdbcType="INTEGER"/>
+            <result property="reportType" column="report_type" jdbcType="BOOLEAN"/>
             <result property="diffType" column="diff_type" jdbcType="INTEGER"/>
             <result property="isUsed" column="is_used" jdbcType="BIT"/>
             <result property="oldBranch" column="old_branch" jdbcType="VARCHAR"/>
             <result property="newBranch" column="new_branch" jdbcType="VARCHAR"/>
+            <result property="reportUri" column="report_uri" jdbcType="VARCHAR"/>
             <result property="isDelete" column="is_delete" jdbcType="BIT"/>
             <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
             <result property="lastTime" column="last_time" jdbcType="TIMESTAMP"/>
@@ -20,8 +21,8 @@
 
     <sql id="Base_Column_List">
         id,project_id,uuid,
-        report_type,diff_type,is_used,old_branch,
-        new_branch,is_delete,add_time,
-        last_time
+        report_type,diff_type,is_used,
+        old_branch,new_branch,report_uri,
+        is_delete,add_time,last_time
     </sql>
 </mapper>

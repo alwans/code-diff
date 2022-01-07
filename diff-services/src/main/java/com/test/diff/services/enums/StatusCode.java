@@ -35,6 +35,8 @@ public enum StatusCode {
     //数据库信息相关
     PROJECT_INFO_NOT_EXISTS(30010, "项目信息不存在"),
     REPO_INFO_NOT_EXITS(30020, "项目对应的仓库信息不存在"),
+    APP_INFO_NOT_EXISTS(30030, "应用信息不存在"),
+    REPORT_NOT_EXISTS(30040, "报告不存在"),
 
     //操作文件相关
     File_ERROR(40010, "文件操作异常"),
