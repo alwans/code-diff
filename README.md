@@ -1,8 +1,29 @@
 # code-diff
-**用于java代码的code-dif && 覆盖数据收集**
+**用于java代码的code-diff && 覆盖数据合并收集**
 
+* 支持git仓库获取代码code-diff
+* 支持多个实例服务合并收集
+* 支持同分支不同commit代码覆盖率合并收集
+* 支持页面配置管理实例服务：配置jacoco端口；配置includes/excludes表达式
+* 支持实时生成查看报告：报告生成支持使用includes && excldes表达式过滤
+* 支持提供api配合jenkins pipeline集成使用
+* 支持收集函数调用链
+
+## linux部署
+> 需要部署server && web 2个服务  
+> FBI warning!!!  
+> 这2个服务都需要和jenkins部署在同一台linux上  
+### server部署
+- 先执行sql文件:[ code-diff/sql/coverage.sql](https://github.com/alwans/code-diff/blob/main/sql/coverage.sql)
+- 修改数据库配置:[diff-services/src/main/resources/application.properties](https://github.com/alwans/code-diff/blob/main/diff-services/src/main/resources/application.properties)
+- 构建jar：mvn clean install -Dmaven.test.skip=true
+- 启动jar服务：java -jar diff-services-1.0.0.jar
+### web部署
+- nginx部署web服务，web文件:[code-diff/dist.zip](https://github.com/alwans/code-diff/tree/main/dist)
+- 访问wen站点
 
 ## docker部署  
+
 
 <!-- > *1.通过nginx部署 /dist/dist.zip 站点*
 
@@ -14,6 +35,7 @@
 
 > *5.访问web服务* -->
 待更新...
+
 
 ## 示图  
 
