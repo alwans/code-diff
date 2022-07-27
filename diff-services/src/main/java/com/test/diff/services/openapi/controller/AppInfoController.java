@@ -40,14 +40,15 @@ public class AppInfoController {
         if(CollectionUtils.isEmpty(list)){
             return BaseResult.error(StatusCode.PROJECT_INFO_NOT_EXISTS);
         }
-        ProjectInfo projectInfo = list.get(0);
-        List<CoverageApp> apps = coverageAppService.getListByProjectId(projectInfo.getId());
-        if(CollectionUtils.isEmpty(apps)){
-            return BaseResult.error(StatusCode.APP_INFO_NOT_EXISTS);
-        }
-        for(CoverageApp app : apps){
-            if(app.getAppName().equalsIgnoreCase(projectName)){
-                return  BaseResult.success(app);
+        for (ProjectInfo projectInfo : list) {
+            List<CoverageApp> apps = coverageAppService.getListByProjectId(projectInfo.getId());
+//            if(CollectionUtils.isEmpty(apps)){
+//                return BaseResult.error(StatusCode.APP_INFO_NOT_EXISTS);
+//            }
+            for(CoverageApp app : apps){
+                if(app.getAppName().equalsIgnoreCase(projectName)){
+                    return  BaseResult.success(app);
+                }
             }
         }
         return BaseResult.error(StatusCode.APP_INFO_NOT_EXISTS);

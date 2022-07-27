@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class StringTest {
 
@@ -12,6 +13,7 @@ public class StringTest {
         String str = "/root/code-diff/wuchan/test/scm-server/feature_1.0_f7eb21efa925a7588ae424ea3033d3805936fb23/sc-support/sc-job/src/main/java";
         str = str.replaceAll("/", ".");
         System.out.println(str);
+
     }
 
     @Test

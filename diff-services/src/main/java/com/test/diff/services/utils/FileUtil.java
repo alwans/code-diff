@@ -59,9 +59,9 @@ public class FileUtil {
         return sb.toString().substring(0, sb.lastIndexOf(File.separator));
     }
 
-    public String addPaths(String root, String... sunPath){
+    public String addPaths(String root, String... subPath){
         StringBuilder path = new StringBuilder(root);
-        for(String p: sunPath){
+        for(String p: subPath){
             p = p.replaceAll("/", "_");
             path.append(File.separator)
                     .append(p);

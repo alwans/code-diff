@@ -65,7 +65,7 @@ public class JacocoHandleTest {
 
     @Test
     public void testLoadExecFile(){
-        String execFilePath = "C:\\Users\\wl\\Desktop\\dump.exec";
+        String execFilePath = "C:\\Users\\wl\\Desktop\\code-diff\\test\\dump.exec";
         ExecFileLoader loader = JacocoHandle.getLoader(execFilePath);
         ExecutionDataStore store = loader.getExecutionDataStore();
         Collection<ExecutionData> data = store.getContents();
