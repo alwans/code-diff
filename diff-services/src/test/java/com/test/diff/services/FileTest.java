@@ -22,6 +22,8 @@ import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class FileTest {
+    
+    private static final String USER_HOME = System.getProperty("user.home");
 
     private FileUtil fileUtil;
 
@@ -75,20 +77,20 @@ public class FileTest {
 
     @Test
     public void testRename(){
-        String newPath = "C:\\Users\\wl\\code-diff\\dump.txt";
-        String oldPath = "C:\\Users\\wl\\code-diff\\merge.txt";
+        String newPath = USER_HOME + "\\code-diff\\dump.txt";
+        String oldPath = USER_HOME + "\\code-diff\\merge.txt";
         fileUtil.reName(newPath, oldPath);
     }
 
     @Test
     public void testDelDir() throws IOException {
-        FileUtils.deleteDirectory(new File("C:\\Users\\wl\\code-diff\\jvmTest\\master_35c27bd393e1f92efb757dfff8d2029bd3163849"));
+        FileUtils.deleteDirectory(new File(USER_HOME + "\\code-diff\\jvmTest\\master_35c27bd393e1f92efb757dfff8d2029bd3163849"));
     }
 
     @Test
     public void testAsyncWrite()   {
         ReentrantLock lock = new ReentrantLock();
-        File file = new File("C:\\Users\\wl\\code-diff\\12.txt");
+        File file = new File(USER_HOME + "\\code-diff\\12.txt");
         Thread t1 = new Thread(){
             @SneakyThrows
             @Override
@@ -154,7 +156,7 @@ public class FileTest {
 
     @Test
     public void testClassPaths(){
-        String branPath = "C:\\Users\\wl\\code-diff\\11\\yami-server";
+        String branPath = USER_HOME + "\\code-diff\\11\\yami-server";
         List<String> list = fileUtil.getAllClassFilePathsByProject(branPath);
         System.out.println(list.size());
         list.stream().forEach(path -> System.out.println(path));
@@ -162,8 +164,8 @@ public class FileTest {
 
     @Test
     public void testCopyProject() throws IOException {
-        String oriPath = "C:\\Users\\wl\\code-diff\\yami-server";
-        String newPath = "C:\\Users\\wl\\code-diff\\122";
+        String oriPath = USER_HOME + "\\code-diff\\yami-server";
+        String newPath = USER_HOME + "\\code-diff\\122";
         //拷贝.git目录
         String oriGitPath = fileUtil.addPath(oriPath, ".git");
         String newGitPath = fileUtil.addPath(newPath, ".git");
@@ -201,7 +203,7 @@ public class FileTest {
             key = key.replace("/", File.separator);
         }
         System.out.println(key);
-        String path = fileUtil.getClassFilePath("G:\\jvm\\github\\code-diff",
+        String path = fileUtil.getClassFilePath(USER_HOME + "\\code-diff",
                 key);
         System.out.println(path);
     }

@@ -10,7 +10,7 @@ public class StringTest {
 
     @Test
     public void testReplace(){
-        String str = "/root/code-diff/wuchan/test/scm-server/feature_1.0_f7eb21efa925a7588ae424ea3033d3805936fb23/sc-support/sc-job/src/main/java";
+        String str = "/root/code-diff/test/test/test-server/feature_1.0_f7eb21efa925a7588ae424ea3033d3805936fb23/sc-test/sc-job/src/main/java";
         str = str.replaceAll("/", ".");
         System.out.println(str);
 

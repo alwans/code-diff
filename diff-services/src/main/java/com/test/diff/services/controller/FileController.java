@@ -5,8 +5,10 @@ import com.test.diff.services.consts.GitConst;
 import com.test.diff.services.entity.ProjectInfo;
 import com.test.diff.services.enums.StatusCode;
 import com.test.diff.services.internal.source.SourceFileHandleFactory;
+import com.test.diff.services.params.CloneParamDto;
 import com.test.diff.services.params.FileParams;
 import com.test.diff.services.service.ProjectInfoService;
+import com.test.diff.services.task.CloneProjectTask;
 import com.test.diff.services.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +36,9 @@ public class FileController {
     @Resource
     private FileUtil fileUtil;
 
+    @Resource
+    private CloneProjectTask cloneProjectTask;
+
     @PostMapping(value = "/class/path", produces = "application/json;charset=UTF-8")
     public BaseResult getFileClassPath(@RequestBody @Validated FileParams fileParams){
         ProjectInfo projectInfo = projectInfoService.getById(fileParams.getId());
@@ -54,6 +59,22 @@ public class FileController {
         log.error("未找到{} class文件路径，工程id: {}, branch: {}, commitId: {}", fileParams.getId(), fileParams.getClassName(),
                 fileParams.getBranch(), fileParams.getCommitId());
         return BaseResult.error(StatusCode.OTHER_ERROR, "class文件不存在");
+    }
+
+    /**
+     * 克隆指定工程的指定分支或者指定commit id代码
+     * @param cloneParamDto 克隆参数
+     * @return
+     */
+    @GetMapping("/clone/")
+    public BaseResult cloneProject(@Validated CloneParamDto cloneParamDto){
+        ProjectInfo projectInfo = projectInfoService.getById(cloneParamDto.getId());
+        if (projectInfo == null){
+            return BaseResult.error(StatusCode.OTHER_ERROR, "id="+cloneParamDto.getId().toString()+"的工程不存在, 请检查参数");
+        }
+        cloneProjectTask.checkClone(projectInfo, cloneParamDto.getBranchName(), cloneParamDto.getCommitId());
+        cloneProjectTask.cloneProjectTask(projectInfo, cloneParamDto.getBranchName(), cloneParamDto.getCommitId());
+        return BaseResult.success(null);
     }
 
     @GetMapping( "copy/project")

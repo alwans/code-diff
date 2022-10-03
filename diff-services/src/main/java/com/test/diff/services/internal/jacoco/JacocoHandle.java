@@ -46,7 +46,7 @@ public class JacocoHandle {
      * @return
      */
     public static String getBranchName(ExecFileLoader loader){
-        return loader.getExecutionDataStore().getBranchName();
+        return loader.getBranchName();
     }
 
     /**
@@ -55,7 +55,7 @@ public class JacocoHandle {
      * @return
      */
     public static String getCommitId(ExecFileLoader loader){
-        return loader.getExecutionDataStore().getCommitId();
+        return loader.getCommitId();
     }
 
     /**

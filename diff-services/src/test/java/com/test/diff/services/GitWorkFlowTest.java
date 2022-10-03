@@ -107,7 +107,7 @@ public class GitWorkFlowTest {
         ProjectInfo projectInfo = projectInfoService.getById(1);
         String brandDir = fileUtil.getRepoPath(projectInfo, branch);
 //        String gitPath = fileUtil.addPath(brandDir, ".git");
-        String gitPath = "C:\\Users\\wl\\code-diff\\11\\yami-server\\.git";
+        String gitPath = System.getProperty("user.home")+"\\code-diff\\11\\test-server\\.git";
         Repository repo = new FileRepository(gitPath);
         Git git = new Git(repo);
         RevWalk walk = new RevWalk(repo);

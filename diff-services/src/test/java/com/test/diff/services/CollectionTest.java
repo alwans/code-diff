@@ -1,23 +1,11 @@
 package com.test.diff.services;
 
-import org.jacoco.cli.internal.core.data.ChainNode;
 import org.junit.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CollectionTest {
-
-    @Test
-    public void testSetClear(){
-        Set<ChainNode> sets = new HashSet<>();
-        ChainNode node = new ChainNode();
-        node.setUri("test");
-        sets.add(node);
-        System.out.println(sets.size());
-        sets.clear();
-        System.out.println(sets.size());
-    }
 
     @Test
     public void testSetArrayClear(){
@@ -64,8 +52,7 @@ public class CollectionTest {
 
     @Test
     public void testArraySplit(){
-//        String str = "String;String;Integer;";
-        String str = "Ljava/lang/String;Lcom/beitai/iot/data/enums/SourceType;";
+        String str = "String;String;Integer;";
         String[] arr = str.split(";");
         System.out.println(arr);
     }

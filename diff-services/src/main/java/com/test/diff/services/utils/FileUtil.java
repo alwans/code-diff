@@ -44,7 +44,7 @@ public class FileUtil {
      * @param subPath
      * @return
      */
-    public String addPath(String... subPath){
+    public static String addPath(String... subPath){
         StringBuilder sb = new StringBuilder();
         for(String path: subPath){
             if(StringUtils.isBlank(path)){
@@ -79,14 +79,14 @@ public class FileUtil {
      * @param branch
      * @return
      */
-    public String getRepoPath(String group, String env, String projectName, String branch){
+    public static String getRepoPath(String group, String env, String projectName, String branch){
         if(branch.contains("/")){
             branch = branch.replaceAll("/", "_");
         }
         return addPath(FileConst.DIFF_ROOT_PATH, group, env, projectName, branch);
     }
 
-    public String getRepoPath(ProjectInfo projectInfo, String branch){
+    public static String getRepoPath(ProjectInfo projectInfo, String branch){
         return getRepoPath(projectInfo.getProjectGroup(), projectInfo.getEnv(),
                 projectInfo.getProjectName(),
                 branch);

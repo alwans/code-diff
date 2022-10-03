@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class GitFileHandleTest {
 
+    private static final String USER_HOME = System.getProperty("user.home");
+
     @Autowired
      protected ApplicationContext ctx;
 
@@ -21,7 +23,7 @@ public class GitFileHandleTest {
     public void testCopyProject(){
         SpringUtil.setContext(ctx);
         ISourceFileHandle handle = SourceFileHandleFactory.build();
-        String commitId = handle.copyProjectFile(null, "master", "C:\\Users\\wl\\code-diff\\jvmTest", 1);
+        String commitId = handle.copyProjectFile(null, "master", USER_HOME + "\\code-diff\\jvmTest", 1);
         System.out.println(commitId);
     }
 }
